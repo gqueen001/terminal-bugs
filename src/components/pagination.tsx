@@ -1,16 +1,13 @@
-import { useEffect, useRef, useState } from "react";
-import ReactPaginate from "react-paginate";
+import { FC, useEffect, useState } from "react";
 import { getData } from "../services/data";
 
-interface PaginationProps {
-  setCurrentItems: React.Dispatch<React.SetStateAction<any[]>>;
+interface paginationType {
+  setDataOfPage: any;
 }
 
-const Pagination: React.FC<PaginationProps> = ({ setCurrentItems }) => {
-  const [bugs, setBugs] = useState([]);
-  const [itemOffSet, setItemOffSet] = useState(0);
-  const itemsPerPage = useRef(10);
-  const pageCount = bugs.length / itemsPerPage.current;
+const Pagination: FC<paginationType> = ({ setDataOfPage }) => {
+  const [bugs, setBugs] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState<any>(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,27 +22,29 @@ const Pagination: React.FC<PaginationProps> = ({ setCurrentItems }) => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const endOffset = itemOffSet + itemsPerPage.current;
-    const currentItems = bugs?.slice(itemOffSet, endOffset);
-    setCurrentItems(currentItems);
-  }, [itemOffSet, bugs, setCurrentItems]);
+  const pages: any[] = [];
+  const dataOfPerPage: number = 10;
+  const totalPage: number = bugs.length / dataOfPerPage;
 
-  const pageChange = (event: { selected: number }) => {
-    const newOffSet = (event.selected * itemsPerPage.current) % bugs.length;
-    setItemOffSet(newOffSet);
-  };
+  for (let i = 1; i <= totalPage; i++) {
+    pages.push(i);
+  }
+
+  useEffect(() => {
+    const lastPageIndex = currentPage * dataOfPerPage;
+    const firstPageIndex = lastPageIndex - dataOfPerPage;
+    setDataOfPage(bugs.slice(firstPageIndex, lastPageIndex));
+  }, [currentPage, bugs]);
 
   return (
     <>
-      <ReactPaginate
-        pageCount={pageCount}
-        breakLabel="..."
-        nextLabel="next >"
-        previousLabel="< previous"
-        onPageChange={pageChange}
-        pageRangeDisplayed={3}
-      />
+      {pages.map((page: number) => {
+        return (
+          <button key={page} onClick={() => setCurrentPage(page)}>
+            {page}
+          </button>
+        );
+      })}
     </>
   );
 };

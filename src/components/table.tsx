@@ -3,7 +3,7 @@ import { useState } from "react";
 import Pagination from "./pagination";
 
 const Table = () => {
-  const [currentItems, setCurrentItems] = useState<any[]>([]);
+  const [dataOfPage, setDataOfPage] = useState<any[]>([]);
 
   return (
     <>
@@ -16,7 +16,7 @@ const Table = () => {
               <th className="text-start text-lg font-thin p-0">bugs</th>
               <th className="text-start text-lg font-thin p-0">Action</th>
             </tr>
-            {currentItems?.map((bug: any, index: number) => {
+            {dataOfPage?.map((bug: any, index: number) => {
               return (
                 <tr
                   className="h-11 border-solid border-2 border-neutral-200 grid grid-cols-[10%_10%_70%_10%]"
@@ -33,7 +33,7 @@ const Table = () => {
             })}
           </tbody>
         </table>
-        <Pagination setCurrentItems={setCurrentItems} />
+        <Pagination setDataOfPage={setDataOfPage} />
       </div>
     </>
   );
