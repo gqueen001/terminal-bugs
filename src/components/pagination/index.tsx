@@ -2,7 +2,6 @@ import { FC, useEffect, useState } from "react";
 import { getData } from "../../services/data";
 import { usePagination } from "./usePagination";
 import { IoMdArrowForward } from "react-icons/io";
-
 import { IoMdArrowBack } from "react-icons/io";
 
 interface paginationType {

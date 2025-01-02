@@ -1,15 +1,16 @@
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useState } from "react";
 import Pagination from "./pagination/index";
-import Header from "./header";
+import Search from "./search";
 
 const Table = () => {
   const [dataOfPage, setDataOfPage] = useState<any[]>([]);
+  // const [isSearched, setIsSearched] = useState<any[]>([])
 
   return (
     <>
-      <Header />
       <div className="bg-slate-50 border-solid border-2 border-gray-200 rounded-lg">
+        <Search setDataOfPage={setDataOfPage} />
         <table className="w-full">
           <tbody>
             <tr className="bg-slate-200 items-center h-11 border-solid border-b-2 border-neutral-200  grid grid-cols-[10%_25%_50%_10%] gap-5">
